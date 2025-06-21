@@ -1,8 +1,9 @@
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
-from app.models.usuario import Usuario
-from app.schemas.usuario import UsuarioCreate, UsuarioUpdate
+from app.models.model_usuario import Usuario
+from app.models.model_perfil import Perfil
+from app.schemas.schema_usuario import UsuarioCreate, UsuarioUpdate
 
 def crear_usuario(db: Session, usuario: UsuarioCreate):
     db_usuario = Usuario(**usuario.model_dump())
@@ -37,3 +38,8 @@ def eliminar_usuario(db: Session, usuario_id: int):
         db.commit()
         return True
     return False
+
+def obtener_perfil_usuario(db: Session, usuario_id: int):
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    perfil = db.query(Perfil).filter(Perfil.id == usuario.id).first()
+    return perfil

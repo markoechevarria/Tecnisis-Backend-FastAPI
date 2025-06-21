@@ -5,6 +5,7 @@ class UsuarioBase(BaseModel):
     nombre: str
     correo: str
     contrasena: str
+    id_perfil: int
 
 class UsuarioCreate(UsuarioBase):
     pass
