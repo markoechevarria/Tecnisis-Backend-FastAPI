@@ -1,0 +1,2 @@
+alembic revision --autogenerate -m "descripcion"
+alembic upgrade head

@@ -12,6 +12,7 @@ class Usuario(Base):
     id_perfil = Column(Integer, ForeignKey("perfiles.id"))
 
     perfil = relationship("Perfil", back_populates="usuario")
+    solicitud = relationship("Solicitud", back_populates="usuario")
 
     def __repr__(self):
         return f"<Usuario(id={self.id}, name='{self.nombre}')>"

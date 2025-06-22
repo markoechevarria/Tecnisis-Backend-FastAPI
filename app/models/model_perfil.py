@@ -9,6 +9,8 @@ class Perfil(Base):
     nombre = Column(String, index=True)
 
     usuario = relationship("Usuario", back_populates="perfil")
+    opcion = relationship("Opcion", back_populates="perfil")
 
     def __repr__(self):
-        return f"<Usuario(id={self.id}, perfil='{self.nombre}')>"
+        return f"<Perfil(id={self.id}, perfil='{self.nombre}')>"
+    
