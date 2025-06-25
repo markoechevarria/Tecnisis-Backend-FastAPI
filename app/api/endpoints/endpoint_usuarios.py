@@ -40,3 +40,10 @@ def eliminar_usuario(usuario_id: int, db: Session = Depends(get_db)):
     if not success: 
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return { "message": "Usuario eliminado exitosamente"}
+
+@router.get("/ingresar/", response_model=UsuarioResponse)
+def ingresar_usuario(correo: str, contrasena: str, db: Session = Depends(get_db)):
+    usuario = crud_usuario.ingresar_usuario(db, correo=correo, contrasena=contrasena)
+    if usuario is None:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado, registrese primero")
+    return usuario

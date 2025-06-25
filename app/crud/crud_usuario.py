@@ -43,3 +43,6 @@ def obtener_perfil_usuario(db: Session, usuario_id: int):
     usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
     perfil = db.query(Perfil).filter(Perfil.id == usuario.id).first()
     return perfil
+
+def ingresar_usuario(db: Session, correo: str, contrasena: str):
+    return db.query(Usuario).filter(Usuario.correo == correo, Usuario.contrasena == contrasena).first()
