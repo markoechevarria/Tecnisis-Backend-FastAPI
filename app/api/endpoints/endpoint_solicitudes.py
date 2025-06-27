@@ -25,7 +25,7 @@ def obtener_solicitud_por_id(id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Solicitud no encontrada")
     return 
 
-@router.get("/artistico/{solicitudes_db_evaluador_artistico}", response_model=List[SolicitudResponse])
+@router.get("/artistico/{id_evaluador_artistico}", response_model=List[SolicitudResponse])
 def obtener_solicitudes_por_id_evaluador_artistico(id_evaluador_artistico: int, db: Session = Depends(get_db)):
     solicitudes_db_evaluador_artistico = crud_solicitud.obtener_solicitudes_por_id_evaluador_artistico(db, id_evaluador_artistico= id_evaluador_artistico )
     return solicitudes_db_evaluador_artistico
