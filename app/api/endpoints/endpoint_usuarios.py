@@ -47,3 +47,10 @@ def ingresar_usuario(correo: str, contrasena: str, db: Session = Depends(get_db)
     if usuario is None:
         raise HTTPException(status_code=404, detail="Usuario no encontrado, registrese primero")
     return usuario
+
+@router.get("/evaluadoresArtisticos/", response_model=List[UsuarioResponse])
+def obtener_evaluadores_artisticos( db: Session = Depends(get_db)):
+    usuarios = crud_usuario.obtener_evaluadores_artisticos(db)
+    if usuarios is None:
+        raise HTTPException(status_code=404, detail="Evaluadores Artisticos no encontrados")
+    return usuarios

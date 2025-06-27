@@ -46,3 +46,6 @@ def obtener_perfil_usuario(db: Session, usuario_id: int):
 
 def ingresar_usuario(db: Session, correo: str, contrasena: str):
     return db.query(Usuario).filter(Usuario.correo == correo, Usuario.contrasena == contrasena).first()
+
+def obtener_evaluadores_artisticos(db: Session ):
+    return db.query(Usuario).filter(Usuario.id_perfil == 2 ).all()

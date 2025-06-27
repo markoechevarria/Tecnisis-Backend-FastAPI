@@ -5,48 +5,11 @@ from app.models.model_obra import Obra
 from app.schemas.schema_obra import ObraCreate
 
 def obtener_obra_por_id(db: Session, id: int):
-    return db.query(Obra).filter(Obra.id == id).first()    
+    return db.query(Obra).filter(Obra.id == id).first()
 
-"""
-def crear_usuario(db: Session, usuario: UsuarioCreate):
-    db_usuario = Usuario(**usuario.model_dump())
-    db.add(db_usuario)
+def registrar_obra(db: Session, obra: ObraCreate):
+    db_obra = Obra(**obra.model_dump())
+    db.add(db_obra)
     db.commit()
-    db.refresh(db_usuario)
-    return db_usuario
-
-def obtener_usuario_por_id(db: Session, usuario_id: int):
-    return db.query(Usuario).filter(Usuario.id == usuario_id).first()
-
-def obtener_usuario_por_nombre(db: Session, usuario_nombre: str):
-    return db.query(Usuario).filter(Usuario.nombre == usuario_nombre).first()
-
-def obtener_usuarios(db: Session ):
-    return db.query(Usuario).all()
-
-def actualizar_usuario(db: Session, usuario_id: int, usuario_update: UsuarioUpdate):
-    db_usuario = db.query(Usuario).filter( Usuario.id == usuario_id).first()
-    if db_usuario:
-        for key, value in usuario_update.model_dump(exclude_unset=True).items():
-            setattr(db_usuario, key, value)
-        db.add(db_usuario)
-        db.commit()
-        db.refresh(db_usuario)
-    return db_usuario
-
-def eliminar_usuario(db: Session, usuario_id: int):
-    db_usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
-    if db_usuario:
-        db.delete(db_usuario)
-        db.commit()
-        return True
-    return False
-
-def obtener_perfil_usuario(db: Session, usuario_id: int):
-    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
-    perfil = db.query(Perfil).filter(Perfil.id == usuario.id).first()
-    return perfil
-
-def ingresar_usuario(db: Session, correo: str, contrasena: str):
-    return db.query(Usuario).filter(Usuario.correo == correo, Usuario.contrasena == contrasena).first()
-"""
+    db.refresh(db_obra)
+    return db_obra

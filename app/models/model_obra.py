@@ -8,6 +8,7 @@ class Obra(Base):
     id = Column(Integer, primary_key=True)
     id_tecnica = Column(Integer, ForeignKey("tecnicas.id"))
     id_artista = Column(Integer, ForeignKey("artistas.id"))
+    nombre = Column(String, nullable=False)
     fecha = Column(String)
     dimensiones = Column(String)
 
