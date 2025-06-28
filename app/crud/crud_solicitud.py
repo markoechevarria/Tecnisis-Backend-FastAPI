@@ -35,3 +35,14 @@ def registrar_solicitud(db: Session, solicitud: SolicitudCreate):
     db.commit()
     db.refresh(db_solicitud)
     return db_solicitud
+
+def asignar_precio_solicitud(db: Session, id: int, precio: int, porcentaje: int):
+    solicitud = db.query(Solicitud).filter(Solicitud.id == id).first()
+    if solicitud:
+        solicitud.precio_venta = precio
+        solicitud.porcentaje_ganancia = porcentaje
+        solicitud.aprobadaEValuadorEconomico = True
+        db.commit()
+        db.refresh(solicitud)
+        return solicitud
+    return None     

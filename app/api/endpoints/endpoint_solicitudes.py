@@ -43,3 +43,10 @@ def evaluar_solicitud(id: int, aprobacion: int, db: Session = Depends(get_db)):
     if solicitud_db is None:
         raise HTTPException(status_code=404, detail="Solicitud no encontrada")
     return solicitud_db
+
+@router.post("/asignarPrecio/{id}", response_model=SolicitudResponse)
+def asignar_precio_solicitud(id: int, precio: int, porcentaje: int, db: Session = Depends(get_db)):
+    solicitud_db = crud_solicitud.asignar_precio_solicitud(db=db, id=id, precio=precio, porcentaje=porcentaje)
+    if solicitud_db is None:
+        raise HTTPException(status_code=404, detail="Solicitud no encontrada")
+    return solicitud_db 
