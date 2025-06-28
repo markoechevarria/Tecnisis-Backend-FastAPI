@@ -19,11 +19,11 @@ def obtener_solicitudes_dni(dni: str, db: Session = Depends(get_db)):
     return solicitudes
 
 @router.get("/id/{id}", response_model=SolicitudResponse)
-def obtener_solicitud_por_id(id: str, db: Session = Depends(get_db)):
-    solititud_db = crud_solicitud.obtener_solicitud_por_id(db, id=id)
-    if solititud_db is None:
+def obtener_solicitud_por_id(id: int, db: Session = Depends(get_db)):
+    solicitud_db = crud_solicitud.obtener_solicitud_por_id(db, id=id)
+    if solicitud_db is None:
         raise HTTPException(status_code=404, detail="Solicitud no encontrada")
-    return 
+    return solicitud_db
 
 @router.get("/artistico/{id_evaluador_artistico}", response_model=List[SolicitudResponse])
 def obtener_solicitudes_por_id_evaluador_artistico(id_evaluador_artistico: int, db: Session = Depends(get_db)):
@@ -36,3 +36,10 @@ def registrar_solicitud(solicitud: SolicitudCreate, db: Session = Depends(get_db
     if db_solicitud is None:
         raise HTTPException(status_code=400, detail="Error al registrar la solicitud")
     return db_solicitud
+
+@router.post("/evaluarSolicitud/{id}", response_model=SolicitudResponse)
+def evaluar_solicitud(id: int, aprobacion: int, db: Session = Depends(get_db)):
+    solicitud_db = crud_solicitud.evaluar_solicitud(id=id, aprobacion=aprobacion, db=db)
+    if solicitud_db is None:
+        raise HTTPException(status_code=404, detail="Solicitud no encontrada")
+    return solicitud_db

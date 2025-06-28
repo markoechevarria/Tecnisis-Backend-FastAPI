@@ -13,6 +13,16 @@ def obtener_solicitudes(db: Session):
 def obtener_solicitudes_dni(db: Session):
     return db.query(Solicitud).all()
 
+def evaluar_solicitud( id:int, aprobacion: int ,db: Session):
+    solicitud =  db.query(Solicitud).filter(Solicitud.id == id).first()
+    if (aprobacion == 1):
+        solicitud.aprobadaEvaluadorArtistico = True
+    elif (aprobacion == 0):
+        solicitud.aprobadaEvaluadorArtistico = False
+    db.commit()
+    db.refresh(solicitud)
+    return solicitud    
+
 def obtener_solicitudes_por_id_evaluador_artistico(db: Session, id_evaluador_artistico: int):
     return db.query(Solicitud).filter(Solicitud.id_evaluador_artistico == id_evaluador_artistico).all()
 

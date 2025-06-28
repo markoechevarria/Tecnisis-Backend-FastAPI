@@ -7,8 +7,8 @@ class SolicitudBase(BaseModel):
     id_evaluador_artistico: int
     aprobadaEvaluadorArtistico: bool
     aprobadaEValuadorEconomico: bool
-    porcentaje_ganancia: float
-    precio_venta: float
+    porcentaje_ganancia: int
+    precio_venta: int
 
 class SolicitudCreate(SolicitudBase):
     pass
