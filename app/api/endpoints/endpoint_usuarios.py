@@ -54,3 +54,10 @@ def obtener_evaluadores_artisticos( db: Session = Depends(get_db)):
     if usuarios is None:
         raise HTTPException(status_code=404, detail="Evaluadores Artisticos no encontrados")
     return usuarios
+
+@router.post("/registrarExperto/", response_model=UsuarioResponse)
+def registrar_experto(usuario: UsuarioCreate, db: Session = Depends(get_db)):
+    db_usuario = crud_usuario.obtener_usuario_por_nombre(db, usuario_nombre=usuario.nombre)
+    if db_usuario:
+        raise HTTPException(status_code=400, detail="El usuario ya existe")
+    return crud_usuario.registrar_experto(db=db, usuario=usuario)

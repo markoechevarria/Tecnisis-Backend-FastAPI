@@ -49,3 +49,10 @@ def ingresar_usuario(db: Session, correo: str, contrasena: str):
 
 def obtener_evaluadores_artisticos(db: Session ):
     return db.query(Usuario).filter(Usuario.id_perfil == 2 ).all()
+
+def registrar_experto(db: Session,usuario: UsuarioCreate):
+    db_usuario = Usuario(**usuario.model_dump())
+    db.add(db_usuario)
+    db.commit()
+    db.refresh(db_usuario)
+    return db_usuario

@@ -17,3 +17,10 @@ def obtener_perfil_usuario( id_usuario: int, db: Session = Depends(get_db) ):
     if perfil is None: 
         raise HTTPException(status_code=404, detail="Perfil no encontrado")
     return perfil
+
+@router.get("/perfil/{id_perfil}", response_model=PerfilResponse)
+def obtener_perfil_por_id( id_perfil: int, db: Session = Depends(get_db) ):
+    perfil = crud_perfil.obtener_perfil_id(db, id=id_perfil)
+    if perfil is None: 
+        raise HTTPException(status_code=404, detail="Perfil no encontrado")
+    return perfil   
