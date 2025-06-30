@@ -21,3 +21,17 @@ def registrar_experto(tecnica: TecnicaCreate, db: Session = Depends(get_db)):
     if db_tecnica is None:
         raise HTTPException(status_code=400, detail="Error al registrar la técnica")
     return db_tecnica
+
+@router.get("/", response_model=List[TecnicaResponse])
+def listar_tecnicas(db: Session = Depends(get_db)):
+    tecnicas_db = crud_tecnica.obtener_tecnicas(db)
+    if not tecnicas_db:
+        raise HTTPException(status_code=404, detail="No se encontraron técnicas")
+    return tecnicas_db 
+
+@router.put("/actualizar/{id_tecnica}", response_model=TecnicaResponse)
+def actualizar_tecnica(id_tecnica: int, tecnica: TecnicaCreate, db: Session = Depends(get_db)):
+    db_tecnica = crud_tecnica.actualizar_tecnica(db, id=id_tecnica, tecnica=tecnica)
+    if db_tecnica is None:
+        raise HTTPException(status_code=404, detail="Técnica no encontrada o error al actualiar")
+    return db_tecnica   

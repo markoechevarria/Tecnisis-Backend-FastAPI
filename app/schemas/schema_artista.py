@@ -1,8 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
 
-# Artista que quiere vender su obra
-
 class ArtistaBase(BaseModel):
     nombre: str
     dni: str

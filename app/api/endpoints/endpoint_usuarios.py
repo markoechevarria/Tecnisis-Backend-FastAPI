@@ -27,9 +27,9 @@ def obtener_usuario_por_id(usuario_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return usuario
 
-@router.put("/{usuario_id}", response_model=UsuarioResponse)
-def actualizar_usuario(usuario_id: int, usuario_update: UsuarioUpdate, db: Session = Depends(get_db)):
-    usuario = crud_usuario.actualizar_usuario(db, usuario_id=usuario_id, usuario_update=usuario_update)
+@router.put("/actualizar/{id_usuario}", response_model=UsuarioResponse)
+def actualizar_usuario(id_usuario: int, usuario_update: UsuarioUpdate, db: Session = Depends(get_db)):
+    usuario = crud_usuario.actualizar_usuario(db, usuario_id=id_usuario, usuario_update=usuario_update)
     if usuario is None:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return usuario
