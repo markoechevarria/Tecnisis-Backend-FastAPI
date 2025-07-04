@@ -23,7 +23,7 @@ class ArtistaResponse(ArtistaBase):
 
 class ArtistaPrecios(BaseModel):
     nombre: str
-    precio: float
+    precio: int
 
     class Config:
         from_attributes = True

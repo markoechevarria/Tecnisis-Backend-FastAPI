@@ -36,6 +36,6 @@ def obtener_precio_promedio_solicitudes_por_artista(db: Session):
     return [
         ArtistaPrecios(
             nombre=r.nombre,
-            precio=r.precio_promedio if r.precio_promedio is not None else Decimal('0.00')
+            precio=int(r.precio_promedio) if r.precio_promedio is not None else 0
         ) for r in results
     ]
