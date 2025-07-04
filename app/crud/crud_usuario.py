@@ -1,9 +1,11 @@
 from sqlalchemy.orm import Session
 from typing import List, Optional
+from sqlalchemy import func
 
 from app.models.model_usuario import Usuario
 from app.models.model_perfil import Perfil
-from app.schemas.schema_usuario import UsuarioCreate, UsuarioUpdate
+from app.models.model_solicitud import Solicitud
+from app.schemas.schema_usuario import UsuarioCreate, UsuarioUpdate, ExpertoSolicitudes
 
 def crear_usuario(db: Session, usuario: UsuarioCreate):
     db_usuario = Usuario(**usuario.model_dump())
@@ -56,3 +58,16 @@ def registrar_experto(db: Session,usuario: UsuarioCreate):
     db.commit()
     db.refresh(db_usuario)
     return db_usuario
+
+def obtener_cantidad_solicitudes_por_experto(db: Session):
+    results = (
+            db.query(
+                Usuario.id,
+                Usuario.nombre,
+                func.count(Usuario.id).label("numero_solicitudes")
+            )
+            .outerjoin(Solicitud)
+            .group_by(Usuario.id, Usuario.nombre)
+            .filter(Usuario.id_perfil == 2)
+        )
+    return [ ExpertoSolicitudes(id=r.id, nombre=r.nombre, numero_solicitudes=r.numero_solicitudes) for r in results]

@@ -12,3 +12,9 @@ class TecnicaResponse(TecnicaBase):
     id: int
     class Config:
         from_attributes = True
+
+class ObrasPorTecnica(BaseModel):
+    nombre_tecnica: str
+    numero_obras: int
+    class Config:
+        from_attributes = True

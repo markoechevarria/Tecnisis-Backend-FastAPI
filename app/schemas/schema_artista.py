@@ -20,3 +20,10 @@ class ArtistaResponse(ArtistaBase):
     id: int
     class Config:
         from_attributes = True
+
+class ArtistaPrecios(BaseModel):
+    nombre: str
+    precio: float
+
+    class Config:
+        from_attributes = True

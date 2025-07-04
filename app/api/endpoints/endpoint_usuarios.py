@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.schema_usuario import UsuarioCreate, UsuarioUpdate, UsuarioResponse
+from app.schemas.schema_usuario import UsuarioCreate, UsuarioUpdate, UsuarioResponse, ExpertoSolicitudes
 from app.crud import crud_usuario as crud_usuario
 from app.core.database import get_db
 
@@ -61,3 +61,10 @@ def registrar_experto(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     if db_usuario:
         raise HTTPException(status_code=400, detail="El usuario ya existe")
     return crud_usuario.registrar_experto(db=db, usuario=usuario)
+
+@router.get("/expertoSolicitudes/", response_model=List[ExpertoSolicitudes])
+def obtener_expertos_solicitudes(db: Session = Depends(get_db)):
+    expertos = crud_usuario.obtener_cantidad_solicitudes_por_experto(db)
+    if not expertos:
+        raise HTTPException(status_code=404, detail="No se encontraron expertos con solicitudes")
+    return expertos

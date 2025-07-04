@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.schema_tecnica import TecnicaResponse, TecnicaCreate
+from app.schemas.schema_tecnica import TecnicaResponse, TecnicaCreate, ObrasPorTecnica
 from app.crud import crud_tecnica
 from app.core.database import get_db
 
@@ -35,3 +35,10 @@ def actualizar_tecnica(id_tecnica: int, tecnica: TecnicaCreate, db: Session = De
     if db_tecnica is None:
         raise HTTPException(status_code=404, detail="Técnica no encontrada o error al actualiar")
     return db_tecnica   
+
+@router.get("/ObrasPorTecnica/", response_model=List[ObrasPorTecnica])
+def obtener_cantidad_obras_por_tecnica(db: Session = Depends(get_db)):
+    tecnicas_con_obras = crud_tecnica.obtener_cantidad_obras_por_tecnica(db)
+    if not tecnicas_con_obras:
+        raise HTTPException(status_code=404, detail="No se encontraron técnicas con obras")
+    return tecnicas_con_obras

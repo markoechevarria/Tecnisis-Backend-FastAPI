@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.schemas.schema_artista import ArtistaCreate, ArtistaResponse
+from app.schemas.schema_artista import ArtistaCreate, ArtistaResponse, ArtistaPrecios
 from app.crud import crud_artista as crud_artista
 from app.core.database import get_db
 
@@ -28,3 +28,10 @@ def crear_nuevo_artista(artista: ArtistaCreate, db: Session = Depends(get_db)):
     if db_artista: 
         raise HTTPException(status_code=400, detail="El artista ya existe")
     return crud_artista.crear_artista(db=db, artista=artista)
+
+@router.get("/precios/", response_model=List[ArtistaPrecios])
+def obtener_precio_promedio_solicitudes_por_artista(db: Session = Depends(get_db)):
+    precios = crud_artista.obtener_precio_promedio_solicitudes_por_artista(db)
+    if not precios:
+        raise HTTPException(status_code=404, detail="No se encontraron precios")
+    return precios

@@ -19,3 +19,9 @@ class UsuarioResponse(UsuarioBase):
     id: int
     class Config:
         from_attributes = True
+
+class ExpertoSolicitudes(BaseModel):
+    nombre: str
+    numero_solicitudes: int
+    class Config:
+        from_attributes = True
