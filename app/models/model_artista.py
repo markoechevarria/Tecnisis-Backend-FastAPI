@@ -15,4 +15,4 @@ class Artista(Base):
     solicitud = relationship("Solicitud", back_populates="artista")
 
     def __repr__(self):
-        return f"<Artista(id={self.id}, name='{self.nombre}')>" 
+        return f"<Artista(id={self.id}, name='{self.nombre}')>"
